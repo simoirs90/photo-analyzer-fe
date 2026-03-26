@@ -14,6 +14,14 @@ const mockPhotos = [
     "city.jpg",
     "seaship.jpg",
     "vinyl.jpg",
+    "vinyl2.jpg",
+    "cats-2.png",
+  "cats-3.jpg",
+  "cats-4.jpg",
+    "cats.jpg",
+    "city.jpg",
+    "seaship.jpg",
+    "vinyl.jpg",
     "vinyl2.jpg"
 ];
 
