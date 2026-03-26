@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  gap: 20px;
+  padding: 1rem;
+  box-sizing: border-box;
+  text-align: center;  
+}
+
+.inputFile {
+  margin: 10px 0;
+  max-width: 100%;        /* Evita che l'input esca dallo schermo su mobile */
+}
+
+/* Rendi il tutto responsive */
+@media (max-width: 768px) {
+  .container {
+    justify-content: flex-start;
+    padding-top: 10px;
+  }
+}

@@ -1,6 +1,6 @@
 import React from 'react';
-import { useFileUpload } from '../hooks/useFileUpload';
-import { UploadButton } from '../components/UploadButton';
+import { useFileUpload } from '../../hooks/useFileUpload';
+import { UploadButton } from '../../components/UploadButton';
 import styles from './UploadPage.module.css';
 
 export const UploadPage: React.FC = () => {

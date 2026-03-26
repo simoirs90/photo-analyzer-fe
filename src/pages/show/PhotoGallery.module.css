@@ -1,0 +1,38 @@
+.container {
+  height: 80vh;
+  overflow-y: auto;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.card {
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: #f3f3f3;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.message {
+  text-align: center;
+  margin-top: 20px;
+  color: #666;
+}
+
+.error {
+  text-align: center;
+  margin-top: 20px;
+  color: red;
+}
