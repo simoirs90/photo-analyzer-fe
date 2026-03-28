@@ -19,7 +19,7 @@ export const usePhotos = (userId: string | undefined, page: number = 0, size: nu
         size: size.toString(),
       });
 
-      const response = await fetch(`http://localhost:8080/photos?${queryParams}`);
+      const response = await fetch(`http://localhost:8080/photos/all`);
 
       if (!response.ok) {
         throw new Error('Errore nel recupero delle foto');

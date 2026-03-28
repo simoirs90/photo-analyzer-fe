@@ -13,7 +13,7 @@ export const UploadPage: React.FC = () => {
 
   return (
     <div className={styles.container}>
-  <h1 className={styles.title}>Album di Simone {user?.name}</h1>
+  <h1 className={styles.title}>Album di {user?.name}</h1>
 
  <label className={styles.customFile}>
       Seleziona foto

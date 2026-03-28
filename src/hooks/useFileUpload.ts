@@ -38,7 +38,7 @@ export const useFileUpload = () => {
       setLoading(true);
       setStatus("idle");
 
-      const res = await fetch("http://localhost:8080/upload", {
+      const res = await fetch("http://localhost:8080/photos/upload", {
         method: "POST",
         body: formData,
       });

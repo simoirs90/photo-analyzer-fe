@@ -14,10 +14,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  // Login remoto
+
   const login = async (username: string, password: string): Promise<boolean> => {
+    console.log('Sending ' + username + ' - ' + password);
     try {
-      const res = await fetch('http://localhost:8080/login', {
+      const res = await fetch('http://localhost:8080/users/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
@@ -37,8 +38,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const register = async (username: string, password: string): Promise<boolean> => {
+    console.log('Sending ' + username + ' - ' + password);
     try {
-      const res = await fetch('http://localhost:8080/register', {
+      const res = await fetch('http://localhost:8080/users/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
