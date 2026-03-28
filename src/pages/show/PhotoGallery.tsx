@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./PhotoGallery.module.css";
+import { usePhotos } from "../../hooks/usePhotos";
+import { useAuth } from "../../context/AuthContext";
 
 type Photo = {
   id: string;
@@ -27,16 +29,22 @@ const mockPhotos = [
 
 const PhotoGallery: React.FC = () => {
 
+  const { user } = useAuth();
+  const [page, setPage] = useState(0);
+  const { photos, loading, error } = usePhotos(user?.id, page, 12);
+
   return (
     <div className={styles.container}>
       <div className={styles.grid}>
-            {mockPhotos.map((name, index) => (
+            {mockPhotos.map((name, index) => ( //quando è pronta la chiamata si sostituisce con photos.map
                 <div key={index} className={styles.card}>
                     <img
-                        src={`/testPhotos/${name}`}
+                        src={`/testPhotos/${name}`} // qui la getById
                         alt={name}
                         className={styles.image}
-                        onError={() => console.log("Errore su:", name)}
+                        onError={(e) => {
+                          console.log("Errore su:", name);
+                        }}
                     />
                 </div>
             ))}

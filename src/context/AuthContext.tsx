@@ -1,33 +1,75 @@
-import React, { createContext, useState, useContext, type ReactNode } from 'react';
+import React, { createContext, useState, useContext, useEffect, type ReactNode } from 'react';
 import type { User, AuthContextType } from '../model/Model';
 
-// Inizializziamo il context con undefined, gestendo poi l'errore se usato fuori dal Provider
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
-  const login = (username: string, password: string): boolean => {
-    if (username === "admin" && password === "password") { // Mock logic
-      setUser({ id: '123', name: username });
-      return true;
+  // Carica utente dal localStorage all'avvio
+  useEffect(() => {
+    const stored = localStorage.getItem('user');
+    if (stored) {
+      setUser(JSON.parse(stored));
     }
-    return false;
+  }, []);
+
+  // Login remoto
+  const login = async (username: string, password: string): Promise<boolean> => {
+    try {
+      const res = await fetch('http://localhost:8080/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!res.ok) return false;
+
+      const data = await res.json();
+      setUser(data);
+      localStorage.setItem('user', JSON.stringify(data));
+      return true;
+
+    } catch (err) {
+      console.error(err);
+      return false;
+    }
   };
 
-  const logout = () => setUser(null);
+  const register = async (username: string, password: string): Promise<boolean> => {
+    try {
+      const res = await fetch('http://localhost:8080/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!res.ok) return false;
+
+      return true;
+
+    } catch (err) {
+      console.error(err);
+      return false;
+    }
+  };
+
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem('user');
+  };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Hook con controllo di sicurezza TS
+// Hook con controllo TS
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useAuth deve essere usato all\'interno di un AuthProvider');
   }
   return context;

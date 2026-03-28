@@ -1,29 +1,53 @@
 import React from 'react';
 import { useFileUpload } from '../../hooks/useFileUpload';
-import { UploadButton } from '../../components/UploadButton';
 import styles from './UploadPage.module.css';
 import { useAuth } from '../../context/AuthContext';
 
 export const UploadPage: React.FC = () => {
-  const { file, selectFile, uploadFile, resetFile } = useFileUpload();
-  const { user, logout } = useAuth();
+  const { files, selectFiles, uploadFiles, loading, status } = useFileUpload();
+  const { login, register, user, logout } = useAuth();
+
+  const handleUploadSuccess = () => {
+    // fetchPhotos();
+  };
 
   return (
     <div className={styles.container}>
-      <h1>Album di **{user?.name}**</h1>
+  <h1 className={styles.title}>Album di Simone {user?.name}</h1>
 
-      <input type="file" onChange={selectFile} className={styles.inputFile} />
+ <label className={styles.customFile}>
+      Seleziona foto
+      <input
+        type="file"
+        multiple
+        accept="image/*"
+        onChange={selectFiles}
+        className={styles.hiddenInput}
+      />
+    </label>
+    
+    <button onClick={() => user?.id && uploadFiles(user.id, handleUploadSuccess)} disabled={loading || files.length === 0} className={styles.uploadBtn} >
+      {loading ? "Uploading..." : "Upload"}
+    </button>
+    
+    {files.length > 0 && status === "idle" && (
+      <span>{files.length} file selezionati</span>
+    )}
 
-      <UploadButton onClick={uploadFile} />
+    {status === "success" && (
+      <span className={styles.success}>
+        Foto caricate correttamente
+      </span>
+    )}
 
-      {file && (
-        <div>
-          <p>Selezionato: {file.name}</p>
-          <button onClick={resetFile} className={styles.resetButton}>
-            Rimuovi
-          </button>
-        </div>
-      )}
-    </div>
+    {status === "error" && (
+      <span className={styles.error}>
+        {files.length > 0 && `${files.length} file selezionati `}
+        <span className={styles.errorText}>
+          Errore di caricamento
+        </span>
+      </span>
+    )}
+</div>
   );
 };
