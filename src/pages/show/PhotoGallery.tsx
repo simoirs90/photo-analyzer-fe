@@ -12,19 +12,19 @@ const mockPhotos = [
   "cats-2.png",
   "cats-3.jpg",
   "cats-4.jpg",
-    "cats.jpg",
-    "city.jpg",
-    "seaship.jpg",
-    "vinyl.jpg",
-    "vinyl2.jpg",
-    "cats-2.png",
+  "cats.jpg",
+  "city.jpg",
+  "seaship.jpg",
+  "vinyl.jpg",
+  "vinyl2.jpg",
+  "cats-2.png",
   "cats-3.jpg",
   "cats-4.jpg",
-    "cats.jpg",
-    "city.jpg",
-    "seaship.jpg",
-    "vinyl.jpg",
-    "vinyl2.jpg"
+  "cats.jpg",
+  "city.jpg",
+  "seaship.jpg",
+  "vinyl.jpg",
+  "vinyl2.jpg"
 ];
 
 const PhotoGallery: React.FC = () => {
@@ -43,13 +43,12 @@ const PhotoGallery: React.FC = () => {
                         alt={name}
                         className={styles.image}
                         onError={(e) => {
-                          console.log("Errore su:", name);
+                          console.log("Errore su: ", name);
                         }}
                     />
                 </div>
             ))}
      </div>
-     
     </div>
   );
 };
