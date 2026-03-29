@@ -1,5 +1,5 @@
 export interface User {
-  id: string;
+  id: number;
   name: string;
 }
 
@@ -8,6 +8,7 @@ export interface AuthContextType {
   login: (username: string, password: string) => Promise<boolean>;
   register: (username: string, password: string) => Promise<boolean>;
   logout: () => void;
+  isAuthLoading: boolean
 }
 
 export interface Photo {
@@ -20,7 +21,9 @@ export interface Photo {
 }
 
 export interface PhotoResponse {
-  photos: Photo[];
-  page: number;
-  size: number;
+  metadata: {
+    photos: Photo[];
+    page: number;
+    size: number;
+  };
 }

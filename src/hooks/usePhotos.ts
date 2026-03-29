@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { Photo, PhotoResponse } from '../model/Model';
 
-export const usePhotos = (userId: string | undefined, page: number = 0, size: number = 10) => {
+export const usePhotos = (userId: number | undefined, page: number = 0, size: number = 10) => {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -26,7 +26,10 @@ export const usePhotos = (userId: string | undefined, page: number = 0, size: nu
       }
 
       const data: PhotoResponse = await response.json();
-      setPhotos(data.photos);
+
+      console.log('Photos: ' + data.metadata.size);
+
+      setPhotos(data.metadata.photos);
       
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Errore sconosciuto');

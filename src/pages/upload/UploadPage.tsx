@@ -26,7 +26,7 @@ export const UploadPage: React.FC = () => {
       />
     </label>
     
-    <button onClick={() => user?.id && uploadFiles(user.id, handleUploadSuccess)} disabled={loading || files.length === 0} className={styles.uploadBtn} >
+    <button onClick={() => user?.id && uploadFiles(user.id.toString(), handleUploadSuccess)} disabled={loading || files.length === 0} className={styles.uploadBtn} >
       {loading ? "Uploading..." : "Upload"}
     </button>
     

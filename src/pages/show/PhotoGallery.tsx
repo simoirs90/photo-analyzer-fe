@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./PhotoGallery.module.css";
 import { usePhotos } from "../../hooks/usePhotos";
 import { useAuth } from "../../context/AuthContext";
-
-type Photo = {
-  id: string;
-  url: string;
-};
+import { usePhoto } from "../../hooks/usePhoto";
 
 const mockPhotos = [
   "cats-2.png",
@@ -29,21 +25,45 @@ const mockPhotos = [
 
 const PhotoGallery: React.FC = () => {
 
-  const { user } = useAuth();
+  const { user, isAuthLoading } = useAuth();
+
+  console.log("Stato auth: ", { user, isAuthLoading });
+
   const [page, setPage] = useState(0);
   const { photos, loading, error } = usePhotos(user?.id, page, 12);
+  const { getPhotoUrl } = usePhoto();
+
+  if (isAuthLoading) {
+    return <p className={styles.message}>Verifica sessione..</p>;
+  }
+
+  if (!user) {
+    return <p className={styles.message}>Effettua il login per vedere le foto</p>;
+  }
+
+  if (loading) {
+    return <p className={styles.message}>Foto in caricamento.. </p>;
+  }
+
+  if (error) {
+    return <p className={styles.message}>Errore caricamento foto</p>;
+  }
+  
+  if (!photos || photos.length === 0) {
+    return <p className={styles.message}>Ancora nessuna foto</p>;
+  }
 
   return (
     <div className={styles.container}>
       <div className={styles.grid}>
-            {mockPhotos.map((name, index) => ( //quando è pronta la chiamata si sostituisce con photos.map
-                <div key={index} className={styles.card}>
+            {photos.map((photo, index) => (
+                <div key={photo.id} className={styles.card}>
                     <img
-                        src={`/testPhotos/${name}`} // qui la getById
-                        alt={name}
+                        src={getPhotoUrl(photo.id, user?.id)}
+                        alt={photo.name}
                         className={styles.image}
                         onError={(e) => {
-                          console.log("Errore su: ", name);
+                          console.log("Errore su: ", photo.id);
                         }}
                     />
                 </div>

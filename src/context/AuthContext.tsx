@@ -5,13 +5,19 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
 
   // Carica utente dal localStorage all'avvio
   useEffect(() => {
     const stored = localStorage.getItem('user');
     if (stored) {
-      setUser(JSON.parse(stored));
+      try {
+        setUser(JSON.parse(stored));
+      } catch {
+        localStorage.removeItem('user');
+      }
     }
+    setIsAuthLoading(false);
   }, []);
 
 
@@ -62,7 +68,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, register }}>
+    <AuthContext.Provider value={{ user, login, logout, register, isAuthLoading }}>
       {children}
     </AuthContext.Provider>
   );
