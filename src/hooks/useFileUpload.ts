@@ -19,6 +19,9 @@ export const useFileUpload = () => {
   };
 
   const uploadFiles = async (userId: string, onSuccess?: () => void) => {
+
+    const apiUrl = import.meta.env.VITE_API_BACKEND_URL;
+    
     if (files.length === 0) return;
 
     if (files.length > 10) {
@@ -38,10 +41,11 @@ export const useFileUpload = () => {
       setLoading(true);
       setStatus("idle");
 
-      const res = await fetch("http://localhost:8080/photos/upload", {
+      const res = await fetch(`${apiUrl}/photos/upload`, {
         method: "POST",
         body: formData,
       });
+      
 
       if (!res.ok) {
         throw new Error("Upload fallito");

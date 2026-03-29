@@ -58,10 +58,30 @@
   margin-left: 5px;
 }
 
-/* Rendi il tutto responsive */
+
 @media (max-width: 768px) {
   .container {
-    justify-content: flex-start;
-    padding-top: 10px;
+    flex-direction: column;     
+    align-items: flex-start;     
+    gap: 10px;
+  }
+
+  .title {
+    width: 100%;
+    font-size: 18px;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+
+  .actions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; 
+  }
+
+  .customFile,
+  .uploadBtn {
+    flex: none;       
   }
 }

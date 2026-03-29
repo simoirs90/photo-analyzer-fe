@@ -16,7 +16,7 @@ export const LoginPage = () => {
     if (success) {
       navigate("/home");
     } else {
-      alert("Credenziali errate");
+      alert("Errore login");
     }
   };
 

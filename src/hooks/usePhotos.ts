@@ -1,10 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { Photo, PhotoResponse } from '../model/Model';
 
+
 export const usePhotos = (userId: number | undefined, page: number = 0, size: number = 10) => {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
+  const apiUrl = import.meta.env.VITE_API_BACKEND_URL;
 
   const fetchPhotos = useCallback(async () => {
     if (!userId) return;
@@ -14,12 +17,10 @@ export const usePhotos = (userId: number | undefined, page: number = 0, size: nu
 
     try {
       const queryParams = new URLSearchParams({
-        userId: userId.toString(),
-        page: page.toString(),
-        size: size.toString(),
+        userId: userId.toString()
       });
 
-      const response = await fetch(`http://localhost:8080/photos/all`);
+      const response = await fetch(`${apiUrl}/photos/all?${queryParams.toString()}`);
 
       if (!response.ok) {
         throw new Error('Errore nel recupero delle foto');
